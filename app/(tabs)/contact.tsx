@@ -1,0 +1,76 @@
+import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { BASIC_LOGO } from "../../constants";
+
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import { useTranslation } from "react-i18next";
+import Logo from "../components/Logo";
+import TextWithBorder from "../components/TextWithBorder";
+
+export default function Contact() {
+    const { t } = useTranslation();
+
+    const contactItems = [
+        {
+            label: "✉️ E-mail : test@test.com",
+        },
+        {
+            label: t("companyName") + "Name",
+        },
+        {
+            label: t("companyAddress"),
+        },
+    ];
+
+    return (
+        <ScrollView contentContainerStyle={styles.container}>
+            <Logo source={BASIC_LOGO.source} size={BASIC_LOGO.size} style={BASIC_LOGO.style} />
+
+            <TextWithBorder children={t("companyPhone")}></TextWithBorder>
+
+            {contactItems.map((item, idx) => {
+                return (
+                    <TextWithBorder key={idx} selectable>
+                        {item.label}
+                    </TextWithBorder>
+                );
+            })}
+
+            <Text style={styles.socialTitle}>{t("followUs")}</Text>
+
+            <View style={styles.socialIcons}>
+                <TouchableOpacity
+                    onPress={() => Linking.openURL("https://www.facebook.com/share/1BBiEK1nqU/")}
+                    style={styles.iconTouch}
+                    activeOpacity={0.7}
+                >
+                    <FontAwesome5 name="facebook-square" size={28} color="#1877F2" />
+                </TouchableOpacity>
+            </View>
+        </ScrollView>
+    );
+}
+
+const styles = StyleSheet.create({
+    container: {
+        flexGrow: 1,
+        width: "100%",
+        padding: 10,
+        alignItems: "center",
+        gap: 25,
+        paddingBottom: 100,
+        backgroundColor: "white",
+    },
+    socialTitle: {
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "#333",
+    },
+    socialIcons: {
+        flexDirection: "row",
+        marginTop: 10,
+        gap: 20,
+    },
+    iconTouch: {
+        padding: 8,
+    },
+});
